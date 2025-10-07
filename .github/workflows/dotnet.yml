@@ -28,7 +28,7 @@ jobs:
     - name: Test (with coverage)
       run: |
         # Run tests and collect coverage (XPlat Code Coverage)
-        dotnet test --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage
+        dotnet test --configuration Release --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage --no-build
 
     - name: List coverage files (for debugging)
       run: find ./coverage -name "*.xml" -type f || echo "No coverage files found"
