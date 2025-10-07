@@ -1,0 +1,11 @@
+﻿global using System;
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.Logging;
+global using Microsoft.Extensions.Logging.Abstractions;
+global using Microsoft.Extensions.Logging.Console;
+global using RobotApp;
+global using RobotApp.Enums;
+global using RobotApp.Interfaces;
+global using RobotApp.Logging;
+global using RobotApp.Models;
+global using RobotApp.Services;

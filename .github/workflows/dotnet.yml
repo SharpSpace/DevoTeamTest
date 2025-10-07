@@ -1,0 +1,44 @@
+name: .NET
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '9.0.x'
+
+    - name: Restore
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build --no-restore --configuration Release
+
+    - name: Test (with coverage)
+      run: |
+        # Run tests and collect coverage (XPlat Code Coverage)
+        dotnet test --no-build --verbosity normal --collect:"XPlat Code Coverage"
+
+    - name: Upload coverage report artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-report
+        path: '**/coverage.cobertura.xml'
+
+    - name: Upload coverage to Codecov
+      if: ${{ secrets.CODECOV_TOKEN != '' }}
+      uses: codecov/codecov-action@v4
+      with:
+        files: '**/coverage.cobertura.xml'
+        fail_ci_if_error: true
