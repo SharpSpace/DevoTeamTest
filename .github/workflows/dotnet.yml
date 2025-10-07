@@ -15,7 +15,7 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Setup .NET
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '9.0.x'
 
@@ -28,17 +28,21 @@ jobs:
     - name: Test (with coverage)
       run: |
         # Run tests and collect coverage (XPlat Code Coverage)
-        dotnet test --no-build --verbosity normal --collect:"XPlat Code Coverage"
+        dotnet test --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage
+
+    - name: List coverage files (for debugging)
+      run: find ./coverage -name "*.xml" -type f || echo "No coverage files found"
 
     - name: Upload coverage report artifact
       uses: actions/upload-artifact@v4
       with:
         name: coverage-report
-        path: '**/coverage.cobertura.xml'
+        path: './coverage/**/coverage.cobertura.xml'
+        if-no-files-found: warn
 
     - name: Upload coverage to Codecov
-      if: ${{ secrets.CODECOV_TOKEN != '' }}
       uses: codecov/codecov-action@v4
       with:
-        files: '**/coverage.cobertura.xml'
-        fail_ci_if_error: true
+        files: './coverage/**/coverage.cobertura.xml'
+        fail_ci_if_error: false
+        token: ${{ secrets.CODECOV_TOKEN }}

@@ -34,10 +34,3 @@ Architecture:
 ## CI / Code coverage
 A GitHub Actions workflow (.github/workflows/dotnet.yml) builds and runs tests. Tests collect an XPlat code coverage report which is uploaded as an artifact named "coverage-report" (coverage.cobertura.xml is produced by the test run).
 
-If you use Codecov you can set the CODECOV_TOKEN secret to upload coverage automatically; Codecov can also provide a badge URL to embed in this README.
-
-Badge (placeholder):
-
-![Coverage](https://raw.githubusercontent.com/<OWNER>/<REPO>/main/coverage-badge.svg)
-
-Replace <OWNER> and <REPO> with your repository information, or replace the image URL with the badge URL provided by your coverage provider (Codecov, Coveralls, etc.).
